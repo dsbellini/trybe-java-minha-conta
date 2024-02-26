@@ -25,6 +25,8 @@ public class Application {
    */
   Client client;
 
+  ElectronicDevice electronicDevice;
+
   /**
    * Constructor that instantiates a new Application.
    *
@@ -34,6 +36,7 @@ public class Application {
     this.ui = ui;
     this.api = new LightDealerApi();
     this.client = new Client();
+    this.electronicDevice = new ElectronicDevice();
   }
 
   /**
@@ -113,6 +116,16 @@ public class Application {
    * Req. 8 – Register address devices.
    */
   public void registerAddressDevices() {
+    String houseRegistration = ui.inputAddressRegistration();
+    Address address = api.findAddress(houseRegistration);
+    if (address == null) {
+      ui.showMessage("Endereço não encontrado!");
+    }
+    int devices = ui.inputNumberOfDevices();
+    for (int index = 0; index < devices; index++) {
+      ui.fillDeviceData(electronicDevice);
+      api.addDeviceToAddress(electronicDevice, address);
+    }
   }
 
   /**

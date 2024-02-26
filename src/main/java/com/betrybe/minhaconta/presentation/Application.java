@@ -150,6 +150,13 @@ public class Application {
    * Req. 10 – Optimizes the energy bill.
    */
   public void optimizeEnergyBill() {
+    String clientCpf = ui.inputClientCpf();
+    Client client = api.findClient(clientCpf);
+    if (client == null) {
+      ui.showMessage("Pessoa cliente não encontrada!");
+    }
+    EnergyAccount energyAccount = new EnergyAccount(client);
+    suggestReducedUsage(energyAccount);
   }
 
   /**
@@ -158,5 +165,10 @@ public class Application {
    * @param energyAccount the energy account
    */
   public void suggestReducedUsage(EnergyAccount energyAccount) {
+    ElectronicDevice[] highConsume = energyAccount.findHighConsumptionDevices();
+    ui.showMessage("Considere reduzir o uso dos seguintes dispositivos:");
+    for (ElectronicDevice device : highConsume) {
+      ui.showMessage(device.getName());
+    }
   }
 }

@@ -19,6 +19,8 @@ public class Application {
    */
   LightDealerApi api;
 
+  Client client;
+
   /**
    * Constructor that instantiates a new Application.
    *
@@ -27,6 +29,7 @@ public class Application {
   public Application(ConsoleUserInterface ui) {
     this.ui = ui;
     this.api = new LightDealerApi();
+    this.client = new Client();
   }
 
   /**
@@ -84,9 +87,8 @@ public class Application {
    * Req. 6 – Register client.
    */
   public void registerClient() {
-    Client client = new Client();
-    ui.fillClientData(client);
-    api.addClient(client);
+    ui.fillClientData(this.client);
+    api.addClient(this.client);
   }
 
   /**

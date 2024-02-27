@@ -31,6 +31,7 @@ public class Application {
    */
   ElectronicDevice electronicDevice;
 
+  Address address;
 
   /**
    * Constructor that instantiates a new Application.
@@ -42,6 +43,7 @@ public class Application {
     this.api = new LightDealerApi();
     this.client = new Client();
     this.electronicDevice = new ElectronicDevice();
+    this.address = new Address();
   }
 
   /**
@@ -88,10 +90,11 @@ public class Application {
         optimizeEnergyBill();
         break;
       case '6':
-        ui.showMessage("Volte sempre!");
+        this.ui.showMessage("Volte sempre!");
         break;
       default:
-        ui.showMessage("Opção inválida!");
+        this.ui.showMessage("Opção inválida!");
+        break;
     }
   }
 
@@ -99,37 +102,38 @@ public class Application {
    * Req. 6 – Register client.
    */
   public void registerClient() {
-    ui.fillClientData(this.client);
-    api.addClient(this.client);
+    this.ui.fillClientData(this.client);
+    this.api.addClient(this.client);
   }
 
   /**
    * Req. 7 – Register client address.
    */
   public void registerClientAddress() {
-    String clientCpf = ui.inputClientCpf();
+    String clientCpf = this.ui.inputClientCpf();
     Client searchClient = api.findClient(clientCpf);
     if (searchClient == null) {
-      ui.showMessage("Pessoa cliente não encontrada!");
+      this.ui.showMessage("Pessoa cliente não encontrada!");
+    } else {
+      this.ui.fillAddressData(this.address);
+      this.api.addAddressToClient(this.address, searchClient);
     }
-    Address clientAddress = new Address();
-    ui.fillAddressData(clientAddress);
-    api.addAddressToClient(clientAddress, searchClient);
   }
 
   /**
    * Req. 8 – Register address devices.
    */
   public void registerAddressDevices() {
-    String houseRegistration = ui.inputAddressRegistration();
-    Address address = api.findAddress(houseRegistration);
+    String houseRegistration = this.ui.inputAddressRegistration();
+    this.address = api.findAddress(houseRegistration);
     if (address == null) {
-      ui.showMessage("Endereço não encontrado!");
-    }
-    int devices = ui.inputNumberOfDevices();
-    for (int index = 0; index < devices; index++) {
-      ui.fillDeviceData(electronicDevice);
-      api.addDeviceToAddress(electronicDevice, address);
+      this.ui.showMessage("Endereço não encontrado!");
+    } else {
+      int devices = ui.inputNumberOfDevices();
+      for (int index = 0; index < devices; index++) {
+        this.ui.fillDeviceData(electronicDevice);
+        this.api.addDeviceToAddress(electronicDevice, address);
+      }
     }
   }
 
@@ -137,26 +141,28 @@ public class Application {
    * Req. 9 – Estimates the address energy bill.
    */
   public void estimateAddressBill() {
-    String houseRegistration = ui.inputAddressRegistration();
-    Address address = api.findAddress(houseRegistration);
+    String houseRegistration = this.ui.inputAddressRegistration();
+    this.address = api.findAddress(houseRegistration);
     if (address == null) {
-      ui.showMessage("Endereço não encontrado!");
+      this.ui.showMessage("Endereço não encontrado!");
+    } else {
+      EnergyBill energyBill = new EnergyBill(address, true);
+      this.ui.showMessage("Valor estimado para a conta: " + energyBill.estimate());
     }
-    EnergyBill energyBill = new EnergyBill(address, true);
-    System.out.println("Valor estimado para a conta: " + energyBill.estimate());
   }
 
   /**
    * Req. 10 – Optimizes the energy bill.
    */
   public void optimizeEnergyBill() {
-    String clientCpf = ui.inputClientCpf();
+    String clientCpf = this.ui.inputClientCpf();
     Client client = api.findClient(clientCpf);
     if (client == null) {
-      ui.showMessage("Pessoa cliente não encontrada!");
+      this.ui.showMessage("Pessoa cliente não encontrada!");
+    } else {
+      EnergyAccount energyAccount = new EnergyAccount(client);
+      suggestReducedUsage(energyAccount);
     }
-    EnergyAccount energyAccount = new EnergyAccount(client);
-    suggestReducedUsage(energyAccount);
   }
 
   /**
@@ -166,9 +172,9 @@ public class Application {
    */
   public void suggestReducedUsage(EnergyAccount energyAccount) {
     ElectronicDevice[] highConsume = energyAccount.findHighConsumptionDevices();
-    ui.showMessage("Considere reduzir o uso dos seguintes dispositivos:");
+    this.ui.showMessage("Considere reduzir o uso dos seguintes dispositivos:");
     for (ElectronicDevice device : highConsume) {
-      ui.showMessage(device.getName());
+      this.ui.showMessage(device.getName());
     }
   }
 }

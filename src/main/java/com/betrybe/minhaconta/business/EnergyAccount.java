@@ -23,17 +23,27 @@ public class EnergyAccount {
    */
   public ElectronicDevice[] findHighConsumptionDevices() {
     Address[] allAddresses = this.client.getAddressesAsArray();
-    List<ElectronicDevice> highConsumptionDevicesList = new ArrayList<>();
+    ElectronicDevice[] highConsumptionDevicesList = new ElectronicDevice[allAddresses.length];
+
+    int index = 0;
 
     for (Address address : allAddresses) {
       ElectronicDevice[] devices = address.getDevicesAsArray();
-      ElectronicDevice maxDevice = devices[0];
-      for (ElectronicDevice device : devices) {
-        if (device.monthlyKwh() > maxDevice.monthlyKwh()) {
-          highConsumptionDevicesList.add(device);
+
+      if (devices.length > 0) {  // Verifica se há dispositivos antes de procurar o de maior consumo
+        ElectronicDevice maxDevice = devices[0];
+
+        for (ElectronicDevice device : devices) {
+          if (device.monthlyKwh() > maxDevice.monthlyKwh()) {
+            maxDevice = device;
+          }
         }
+        highConsumptionDevicesList[index] = maxDevice;
       }
+      index++;
     }
-    return highConsumptionDevicesList.toArray(new ElectronicDevice[0]);
+    return highConsumptionDevicesList;
   }
+
+
 }

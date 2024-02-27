@@ -1,4 +1,4 @@
-# Minha Conta
+# Projeto Minha Conta
 
 Boas-vindas ao repositório do projeto `Minha Conta`.
 

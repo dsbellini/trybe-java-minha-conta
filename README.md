@@ -16,7 +16,7 @@ bem real.
 
 <details>
   <summary><strong>📝 Habilidades que foram utilizadas</strong></summary>
-<h1>Aplicação dos conhecimentos adquiridos dos fundamentos da linguagem Java</h1>
+<h3>Aplicação dos conhecimentos adquiridos dos fundamentos da linguagem Java</h3>
 <p>- Classes em Java</p>
 <p>- Tipos primitivos</p>
 <p>- Tipos não primitivos</p>
@@ -28,6 +28,7 @@ bem real.
 <p>- Gerenciamento de dependências com Maven</p>
 </details>
 
+<details>
 <summary><strong>🎛 Checkstyle</strong></summary>
 
 Para garantir a qualidade do código, utilizei nesse projeto o `Checkstyle`. Assim, o código

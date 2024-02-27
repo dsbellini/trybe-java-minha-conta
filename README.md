@@ -16,16 +16,16 @@ bem real.
 
 <details>
   <summary><strong>📝 Habilidades que foram utilizadas</strong></summary>
-- Aplicação dos conhecimentos adquiridos dos fundamentos da linguagem Java
-  - Classes em Java
-  - Tipos primitivos
-  - Tipos não primitivos
-  - Atributos, métodos e construtores
-  - Strings e Arrays
-  - Conversão de tipos
-  - Estruturas de repetição for/while
-  - Classes wrapper
-  - Gerenciamento de dependências com Maven
+<h1>Aplicação dos conhecimentos adquiridos dos fundamentos da linguagem Java</h1>
+<p>- Classes em Java</p>
+<p>- Tipos primitivos</p>
+<p>- Tipos não primitivos</p>
+<p>- Atributos, métodos e construtores</p>
+<p>- Strings e Arrays</p>
+<p>- Conversão de tipos</p>
+<p>- Estruturas de repetição for/while</p>
+<p>- Classes wrapper</p>
+<p>- Gerenciamento de dependências com Maven</p>
 </details>
 
 <summary><strong>🎛 Checkstyle</strong></summary>
